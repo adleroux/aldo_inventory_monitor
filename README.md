@@ -84,3 +84,12 @@ Note that a Ubuntu 64-bit version is already bundled here `bin/websocketd` for c
 3. **Open Browser**
    - From your browser: localhost:3000
 
+### My Setup
+
+1. **Create a new Rails app**
+   - rails new aldo_inventory_monitor --skip-active-record
+   - cd aldo_inventory_monitor
+
+2. **Add the required gems**
+   - Open the Gemfile and add: gem 'faye-websocket'
+   - Open the Gemfile and add: gem 'eventmachine' 
