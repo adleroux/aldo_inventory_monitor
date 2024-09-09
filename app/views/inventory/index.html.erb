@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aldo Inventory Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    #alerts {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #ffdddd;
+      color: #d9534f;
+      max-width: 100%;
+      overflow-x: auto;
+      display: none; /* Hidden by default */
+    }
+    
+    #latest-json {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    
+    th {
+      background-color: #f4f4f4;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    td {
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Highlight recently updated cells */
+    .highlighted {
+      background-color: yellow;
+      transition: background-color 2s ease;
+    }
+  </style>
+</head>
+<body>
+  <h1>Aldo Inventory Monitor</h1>
+
+  <div id="alerts">
+    <!-- Alerts will be displayed here -->
+  </div>
+
+  <table id="inventory-table">
+    <thead>
+      <tr id="header-row">
+        <th></th> <!-- Empty header for row labels -->
+        <!-- Store headers will be added dynamically -->
+      </tr>
+    </thead>
+    <tbody id="inventory-body">
+      <!-- Inventory rows will be added dynamically -->
+    </tbody>
+  </table>
+
+  <div id="latest-json">
+    <!-- Latest JSON data will be displayed here -->
+  </div>
+
+  <%= javascript_importmap_tags %> <!-- Include JavaScript for handling real-time updates -->
+</body>
+</html>
