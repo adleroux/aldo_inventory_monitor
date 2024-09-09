@@ -30,20 +30,17 @@ The solution consists of a **real-time web interface** built with **Ruby on Rail
 2. **Alerting System:**
    - Alerts the user when the inventory of a shoe model in a store goes too low (below 10) or too high (above or equal to 90). The alerts remain visible until the inventory is updated.
 
-3. **Transfer Suggestions:**
-   - Automatically suggests shoe transfers between stores when one store has low stock and another has high stock. The suggestions are displayed at the top of the interface.
-
-4. **Real-time Updates Using WebSockets:**
+3. **Real-time Updates Using WebSockets:**
    - Utilizes WebSockets for real-time communication. The system listens to incoming inventory updates and updates the interface accordingly.
 
-5. **Interactive Interface:**
+4. **Interactive Interface:**
    - The web page dynamically updates in real-time with changes to the inventory, using JavaScript to handle incoming messages and modify the DOM.
 
 ### Files and Directories
 
 - `app/javascript/channels/inventory_channel.js`: Handles WebSocket connections and updates the inventory data on the page in real time.
 - `app/views/inventory/index.html.erb`: Main HTML page for the inventory interface.
-- `inventory.rb`: Ruby WebSocket server script to simulate the inventory data stream.
+- `lib/inventory.rb`: Ruby WebSocket server script to simulate the inventory data stream.
 - `bin/websocketd`: WebSocket daemon to manage real-time communication.
 
 ## Goal
@@ -78,61 +75,12 @@ Note that a Ubuntu 64-bit version is already bundled here `bin/websocketd` for c
 
 ### Inventory Server
 
-Your WebSocket Server is the tap that aggregates inventories from all stores.
+1. **Start Websocket**
+   - From the root: bin\websocketd.exe --port=8080 ruby lib\inventory.rb
 
-You can run it directly from your own machine.
+2. **Start Webserver**
+   - From the root: rails server
 
-Run the following to start tapping into the inventory events.
+3. **Open Browser**
+   - From your browser: localhost:3000
 
-```
-(bin/)websocketd --port=8080 ruby inventory.rb
-```
-
-You now have an active connection to their stores opened on port 8080.
-
-### Start listening on each event
-
-Listen and react on each event using a WebSocket client.
-
-Various implementations are at your disposal. Whatever floats your boat.
-
-They all work the same way. Provide a method or a block to be executed whenever a new event occurs.
-
-Here are two examples for our favorite languages:
-
-#### Javascript
-
-Open a console on a non-secured page:
-
-```
-var ws = new WebSocket('ws://localhost:8080/');
-
-ws.onmessage = function(event) {
-  console.log(event.data);
-};
-```
-
-#### Ruby
-
-##### Installation
-
-```
-gem install faye-websocket
-gem install eventmachine
-```
-
-##### Example
-
-```
-require 'faye/websocket'
-require 'eventmachine'
-require 'json'
-
-EM.run {
-  ws = Faye::WebSocket::Client.new('ws://localhost:8080/')
-
-  ws.on :message do |event|
-    p JSON.parse(event.data)
-  end
-}
-```
